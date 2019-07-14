@@ -6,4 +6,6 @@ COPY in.js      /opt/resource/in
 COPY out.js     /opt/resource/out
 COPY check.js   /opt/resource/check
 
+RUN ls /opt/resource
+
 RUN chmod +x /opt/resource/in /opt/resource/out /opt/resource/check
