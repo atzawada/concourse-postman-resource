@@ -8,7 +8,15 @@ const getStdin = require("get-stdin");
 
 (async() => {
     params = JSON.parse(await getStdin());
-    console.log(params);
+    //console.log(params);
 })();
 
-console.log("{\"version\": {\"id\":\"3\"}}");
+console.log('{' +
+    '"version": {' +
+    '  "id":"3"' +
+    '},' +
+    '"metadata":[' +
+    '  {"name":"id","value":"3"},' +
+    '  {"name":"processed","value":"1"}' +
+    ']' +
+    '}');
