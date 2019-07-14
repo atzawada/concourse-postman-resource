@@ -1,0 +1,22 @@
+resource_types:
+  - name: postman
+    type: docker-image
+    source:
+      repository: atzawada/concourse-postman-resource
+
+resources:
+  - name: git-repo
+    type: git
+    icon: github-circle
+    webhook_token: token
+    source:
+      uri: ((git-repo))
+      branch: master
+      username: ((git-username))
+      password: ((git-password))
+
+jobs:
+  - name: test-postman
+    plan:
+      - get: git-repo
+      - put: postman
