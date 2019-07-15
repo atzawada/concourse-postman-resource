@@ -11,12 +11,12 @@ const getStdin = require("get-stdin");
     //console.log(params);
 })();
 
-console.log('{' +
-    '"version": {' +
-    '  "id":"3"' +
-    '},' +
-    '"metadata":[' +
-    '  {"name":"id","value":"3"},' +
-    '  {"name":"processed","value":"1"}' +
-    ']' +
-    '}');
+let response = {
+    "version": { "ref": "61cebf" },
+    "metadata": [
+      { "name": "commit", "value": "61cebf" },
+      { "name": "author", "value": "Hulk Hogan" }
+    ]
+  };
+
+console.log(JSON.stringify(response));
