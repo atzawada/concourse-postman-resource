@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 let response = {
     "version": { "ref": "61cebf" },
     "metadata": [
