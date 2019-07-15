@@ -11,6 +11,8 @@ const getStdin = require("get-stdin");
     //console.log(params);
 })();
 
+params["script"];
+
 let response = {
     "version": { "ref": "61cebf" },
     "metadata": [

@@ -1,0 +1,22 @@
+resources:
+  - name: git-repo
+    type: git
+    source:
+      uri: ((git-repo))
+      branch: master
+
+  - name: docker-image
+    type: docker-image
+    source:
+      repository: atzawada/concourse-postman-resource
+      username: ((docker-username))
+      password: ((docker-password))
+
+jobs:
+  - name: build-and-push
+    plan:
+      - get: git-repo
+        trigger: true
+      - put: docker-image
+        params:
+          build: git-repo
