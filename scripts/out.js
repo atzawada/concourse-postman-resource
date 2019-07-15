@@ -14,14 +14,11 @@ const { spawn } = require("child_process");
 
 process.stderr.write("hello");
 
-// const newman = spawn("newman", ["run", "../test/test_data_file.json"]);
-const newman = spawn("newman", []);
+const newman = spawn("newman", ["run", "../test/test_data_file.json"]);
 
 newman.stdout.on('data', (data) => {
     process.stderr.write(data);
 });
-
-process.stderr.write("hello");
 
 let response = {
     "version": { "ref": "61cebf" },
