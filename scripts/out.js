@@ -11,7 +11,7 @@ const getStdin = require("get-stdin");
     //console.log(params);
 })();
 
-console.log("hello");
+process.stderr.write("hello");
 
 let response = {
     "version": { "ref": "61cebf" },
