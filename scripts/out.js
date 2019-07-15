@@ -5,7 +5,7 @@ var stdout = process.stdout;
 var params;
 
 const getStdin = require("get-stdin");
-const spawn = require("child_process");
+const { spawn } = require("child_process");
 
 (async() => {
     params = JSON.parse(await getStdin());
