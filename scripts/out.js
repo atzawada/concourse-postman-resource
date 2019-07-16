@@ -4,20 +4,21 @@ var stdin = process.stdin;
 var stdout = process.stdout;
 var params;
 
-const getStdin = require("get-stdin");
-const { spawn } = require("child_process");
+const newman = require("newman");
+const readline = require('readline');
 
-(async() => {
-    params = JSON.parse(await getStdin());
-    //console.log(params);
-})();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stderr
+});
 
 process.stderr.write("hello");
 
-const newman = spawn("newman", ["run", "../test/test_data_file.json"]);
-
-newman.stdout.on('data', (data) => {
-    process.stderr.write(data);
+newman.run({
+    collection: require('../test/test_data_file.json'),
+    reporters: 'cli'
+}, function (err) {
+	if (err) { throw err; }
 });
 
 let response = {
