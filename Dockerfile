@@ -1,5 +1,5 @@
 FROM node:8-slim
-RUN npm install newman
+RUN npm install -g newman
 
 COPY scripts/in.js      /opt/resource/in
 COPY scripts/out.js     /opt/resource/out
