@@ -1,4 +1,5 @@
 FROM node:8-slim
+RUN export NODE_PATH=/usr/lib/node_modules
 RUN npm install -g newman
 
 COPY scripts/in.js      /opt/resource/in
