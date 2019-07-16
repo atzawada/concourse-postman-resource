@@ -1,11 +1,5 @@
 #! /usr/bin/env node
 
-let response = {
-    "version": { "ref": "61cebf" },
-    "metadata": [
-      { "name": "commit", "value": "61cebf" },
-      { "name": "author", "value": "Hulk Hogan" }
-    ]
-  };
+let response = { "status":"noop" };
 
 console.log(JSON.stringify(response));
