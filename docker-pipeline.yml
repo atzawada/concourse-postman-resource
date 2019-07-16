@@ -1,6 +1,7 @@
 resources:
   - name: git-repo
     type: git
+    check_every: 10s
     source:
       uri: ((git-repo))
       branch: master
