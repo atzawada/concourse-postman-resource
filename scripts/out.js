@@ -1,16 +1,18 @@
 #! /usr/bin/env node
 
-var stdin = process.stdin;
-var stdout = process.stdout;
-var params;
-
-const getStdin = require("get-stdin");
 const { spawn } = require("child_process");
+const readline = require('readline');
+var request;
 
-(async() => {
-    params = JSON.parse(await getStdin());
-    //console.log(params);
-})();
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stderr
+});
+
+rl.on('line', (input) => {
+  request = JSON.parse(input);
+  process.stderr.write(request);
+});
 
 const newman = spawn("newman", ["run", "./test/test.json"], { cwd: "/opt/resource" });
 
