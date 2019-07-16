@@ -23,4 +23,4 @@ jobs:
       - get: git-repo
       - put: postman
         params:
-          test: true
+          script: "git-repo/test/test_data_file.json"
