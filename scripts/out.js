@@ -64,34 +64,36 @@ function run() {
   }
 
   // bail
-  if (params.hasOwnProperty(valid_params[7])) {
+  if (params.hasOwnProperty(valid_params[7]) && params[valid_params[7]]) {
     newman_params.push("--bail");
   }
 
   // silent
-  if (params.hasOwnProperty(valid_params[8])) {
+  if (params.hasOwnProperty(valid_params[8]) && params[valid_params[8]]) {
     newman_params.push("--silent");
   }
 
   // no_color
-  if (params.hasOwnProperty(valid_params[9])) {
+  if (params.hasOwnProperty(valid_params[9]) && params[valid_params[9]]) {
     newman_params.push("--no-color");
   }
 
   // insecure
-  if (params.hasOwnProperty(valid_params[10])) {
+  if (params.hasOwnProperty(valid_params[10]) && params[valid_params[10]]) {
     newman_params.push("-k");
   }
 
   // suppress_exit_code
-  if (params.hasOwnProperty(valid_params[11])) {
+  if (params.hasOwnProperty(valid_params[11]) && params[valid_params[11]]) {
     newman_params.push("-x");
   }
 
   // ignore_redirects
-  if (params.hasOwnProperty(valid_params[12])) {
+  if (params.hasOwnProperty(valid_params[12]) && params[valid_params[12]]) {
     newman_params.push("--ignore-redirects");
   }
+
+  console.error(newman_params);
 
   // Run newman
   const newman = spawn("newman", ["run", "./test/test.json"], { cwd: "/opt/resource" });
