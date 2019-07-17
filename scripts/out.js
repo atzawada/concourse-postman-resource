@@ -5,6 +5,7 @@ const readline = require('readline');
 var request;
 const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
                        "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects" ];
+const tmp_location = "/tmp/build/put/";
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -14,7 +15,7 @@ const rl = readline.createInterface({
 
 rl.on('line', (input) => {
   request = JSON.parse(input);
-  process.stderr.write(input);
+  console.error(input);
   run();
 });
 
@@ -22,7 +23,24 @@ function run() {
 
   // Check and parse params
   var params = request["params"];
-  
+
+  /*
+  // print process.argv
+  process.argv.forEach(function (val, index, array) {
+    console.error(index + ': ' + val);
+  });
+
+  var path = params["script"];
+
+  path = [ path ];
+
+  const ls = spawn("ls", path);
+
+  ls.stdout.on('data', (data) => {
+      process.stderr.write(data);
+  });
+  */
+
   for (param in params) {
     if (!valid_params.includes(param)) {
       console.error("Invalid parameter " + param + ", bailing out.");
@@ -37,7 +55,8 @@ function run() {
     process.exit(-2);
   }
 
-  var newman_params = [];
+  var script_location = tmp_location + params["script"];
+  var newman_params = ["run", script_location];
 
   // env
   if (params.hasOwnProperty(valid_params[3])) {
@@ -96,7 +115,7 @@ function run() {
   console.error(newman_params);
 
   // Run newman
-  const newman = spawn("newman", ["run", "./test/test.json"], { cwd: "/opt/resource" });
+  const newman = spawn("newman", newman_params, { cwd: "/opt/resource" });
 
   newman.stdout.on('data', (data) => {
       process.stderr.write(data);
