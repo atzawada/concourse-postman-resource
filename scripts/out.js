@@ -6,6 +6,8 @@ var request;
 const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
                        "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects" ];
 const tmp_location = "/tmp/build/put/";
+var params = [];
+var newman_params = [];
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -22,7 +24,7 @@ rl.on('line', (input) => {
 function run() {
 
   // Check and parse params
-  var params = request["params"];
+  params = request["params"];
 
   /*
   // print process.argv
@@ -54,9 +56,6 @@ function run() {
     console.error("Missing required parameter, bailing out.");
     process.exit(-2);
   }
-
-  var script_location = tmp_location + params["script"];
-  var newman_params = ["run", script_location];
 
   // env
   if (params.hasOwnProperty(valid_params[3])) {
@@ -113,31 +112,74 @@ function run() {
   }
 
   console.error(newman_params);
+  var run_params = ["run"];
 
-  // Run newman
-  const newman = spawn("newman", newman_params, { cwd: "/opt/resource" });
+  if (params["script"]) {
+    var script_location = tmp_location + params["script"];
 
-  newman.stdout.on('data', (data) => {
+    run_params.push(script_location);
+    run_params.push(newman_params);
+
+    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+    
+    newman.stdout.on('data', (data) => {
       process.stderr.write(data);
-  });
+    });
 
-  newman.stderr.on('data', (data) => {
-    process.stderr.write(data);
-  });
+    newman.stderr.on('data', (data) => {
+      process.stderr.write(data);
+    });
+  
+    newman.on('exit', (data) => {
+      continue_to_scripts();
+    });
+  } else {
+    continue_to_scripts();
+  }
+}
 
+function continue_to_scripts() {
+  // Run newman
+  // const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+  continue_to_folder();
+}
+
+function continue_to_folder() {
+  var run_params = ["run"];
+
+  if (params["folder"]) {
+    run_params.push("--folder");
+    run_params.push(tmp_location + params["folder"]);
+    run_params.push(newman_params);
+    
+    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+    
+    newman.stdout.on('data', (data) => {
+      process.stderr.write(data);
+    });
+
+    newman.stderr.on('data', (data) => {
+      process.stderr.write(data);
+    });
+  
+    newman.on('exit', (data) => {
+      produce_response();
+    });
+  } else {
+      produce_response();
+  }
+}
+
+function produce_response() {
   // Create response
   let response = {
-      "version": { "ref": "Success" },
-      "metadata": [
-        { "name": "success", "value": "4" },
-        { "name": "failure", "value": "1" },
-        { "name": "error", "value": "2" }
-      ]
+    "version": { "ref": "Success" },
+    "metadata": [
+      { "name": "success", "value": "4" },
+      { "name": "failure", "value": "1" },
+      { "name": "error", "value": "2" }
+    ]
   };
 
-  // Log response
-  newman.on('exit', (data) => {
-    console.log(JSON.stringify(response));
-  });
-
+  console.log(JSON.stringify(response));
 }

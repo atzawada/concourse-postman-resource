@@ -23,16 +23,16 @@ jobs:
       - get: git-repo
       - put: postman
         params:
-          script: "git-repo/test/postman_collection_fails.json"
+          script: "git-repo/test/postman_collection.json"
           scripts: "test-scripts"
-          folder: "test-folder"
+          folder: "git-repo/test"
           #env: "test-env"
           #data: "test-data"
           #globals: "test-globals"
-          iterations: 1
+          #iterations: 10
           #bail: true
-          # silent: true
+          #silent: true
           # no_color: true
-          insecure: true
-          # suppress_exit_code: true
-          ignore_redirects: true
+          #insecure: true
+          #suppress_exit_code: true
+          #ignore_redirects: true
