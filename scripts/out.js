@@ -3,7 +3,8 @@
 const { spawn } = require("child_process");
 const readline = require('readline');
 var request;
-const valid_params = ["script"];
+const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
+                       "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects" ];
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -28,6 +29,15 @@ function run() {
       process.exit(-1);
     }
   }
+
+  if (!params.includes(valid_params[0]) &&
+      !params.includes(valid_params[1]) &&
+      !params.includes(valid_params[2])) {
+    console.error("Missing required parameter, bailing out.");
+    process.exit(-2);
+  }
+
+  var newman_params = [];
 
   // Run newman
   const newman = spawn("newman", ["run", "./test/test.json"], { cwd: "/opt/resource" });

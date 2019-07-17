@@ -3,9 +3,9 @@
 # In
 ## Params
 At least one required:
-script - String: json that contains the tests to run.
-scripts - String[]: array of json scripts to run.
-folder - String: folder of json scripts to run.
+script - String: JSON file that contains the tests to run.
+scripts - String[]: Array of json scripts to run.
+folder - String: Folder of json scripts to run.
 
 Optional:
 env - String: Postman environment as json file.
