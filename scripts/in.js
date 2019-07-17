@@ -7,6 +7,6 @@ let response = {
     { "name": "failure", "value": "1" },
     { "name": "error", "value": "2" }
   ]
-};
+}; 
 
 console.log(JSON.stringify(response));
