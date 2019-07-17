@@ -30,9 +30,9 @@ function run() {
     }
   }
 
-  if (!params.includes(valid_params[0]) &&  // script
-      !params.includes(valid_params[1]) &&  // scripts
-      !params.includes(valid_params[2])) {  // folder
+  if (!params.hasOwnProperty(valid_params[0]) &&  // script
+      !params.hasOwnProperty(valid_params[1]) &&  // scripts
+      !params.hasOwnProperty(valid_params[2])) {  // folder
     console.error("Missing required parameter, bailing out.");
     process.exit(-2);
   }
@@ -40,63 +40,57 @@ function run() {
   var newman_params = [];
 
   // env
-  if (params.includes(valid_params[3])) {
+  if (params.hasOwnProperty(valid_params[3])) {
     newman_params.push("-e");
     newman_params.push(params[valid_params[3]]);
   }
 
   // data
-  if (params.includes(valid_params[4])) {
+  if (params.hasOwnProperty(valid_params[4])) {
     newman_params.push("-d");
     newman_params.push(params[valid_params[4]]);
   }
 
   // globals
-  if (params.includes(valid_params[5])) {
+  if (params.hasOwnProperty(valid_params[5])) {
     newman_params.push("-g");
     newman_params.push(params[valid_params[5]]);
   }
 
   // iterations
-  if (params.includes(valid_params[6])) {
+  if (params.hasOwnProperty(valid_params[6])) {
     newman_params.push("-n");
     newman_params.push(params[valid_params[6]]);
   }
 
   // bail
-  if (params.includes(valid_params[7])) {
+  if (params.hasOwnProperty(valid_params[7])) {
     newman_params.push("--bail");
-    newman_params.push(params[valid_params[7]]);
   }
 
   // silent
-  if (params.includes(valid_params[8])) {
+  if (params.hasOwnProperty(valid_params[8])) {
     newman_params.push("--silent");
-    newman_params.push(params[valid_params[8]]);
   }
 
   // no_color
-  if (params.includes(valid_params[9])) {
+  if (params.hasOwnProperty(valid_params[9])) {
     newman_params.push("--no-color");
-    newman_params.push(params[valid_params[9]]);
   }
 
   // insecure
-  if (params.includes(valid_params[10])) {
+  if (params.hasOwnProperty(valid_params[10])) {
     newman_params.push("-k");
-    newman_params.push(params[valid_params[10]]);
   }
 
   // suppress_exit_code
-  if (params.includes(valid_params[11])) {
+  if (params.hasOwnProperty(valid_params[11])) {
     newman_params.push("-x");
-    newman_params.push(params[valid_params[11]]);
   }
 
   // ignore_redirects
-  if (params.includes(valid_params[12])) {
+  if (params.hasOwnProperty(valid_params[12])) {
     newman_params.push("--ignore-redirects");
-    newman_params.push(params[valid_params[12]]);
   }
 
   // Run newman
@@ -112,10 +106,11 @@ function run() {
 
   // Create response
   let response = {
-      "version": { "ref": "61cebf" },
+      "version": { "ref": "Success" },
       "metadata": [
-        { "name": "commit", "value": "61cebf" },
-        { "name": "author", "value": "Hulk Hogan" }
+        { "name": "success", "value": "4" },
+        { "name": "failure", "value": "1" },
+        { "name": "error", "value": "2" }
       ]
   };
 

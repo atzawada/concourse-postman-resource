@@ -24,3 +24,15 @@ jobs:
       - put: postman
         params:
           script: "git-repo/test/test_data_file.json"
+          scripts: "test-scripts"
+          folder: "test-folder"
+          env: "test-env"
+          data: "test-data"
+          globals: "test-globals"
+          iterations: "test-iterations"
+          bail: true
+          silent: true
+          no_color: true
+          insecure: true
+          suppress_exit_code: true
+          ignore_redirects: true

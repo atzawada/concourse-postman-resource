@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
-let response = { "status":"noop" };
+let response = [
+    { "status": "success" }
+];
 
 console.log(JSON.stringify(response));
