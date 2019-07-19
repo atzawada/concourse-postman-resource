@@ -146,7 +146,13 @@ function run() {
 
 function continue_to_scripts() {
   // Run newman
-  // const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+  
+  /*
+  var scripts = params["scripts"];
+  for (script in scripts) {
+    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+  }*/
+  
   produce_response();
 }
 
