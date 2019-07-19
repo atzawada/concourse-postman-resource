@@ -8,5 +8,3 @@ COPY test/test_data_file.json /opt/resource/test/test.json
 
 RUN chmod +x /opt/resource/in /opt/resource/out /opt/resource/check
 WORKDIR /opt/resource
-
-
