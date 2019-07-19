@@ -51,10 +51,15 @@ function run() {
   }
 
   if (!params.hasOwnProperty(valid_params[0]) &&  // script
-      !params.hasOwnProperty(valid_params[1]) &&  // scripts
-      !params.hasOwnProperty(valid_params[2])) {  // folder
+      !params.hasOwnProperty(valid_params[1])) {  // scripts
     console.error("Missing required parameter, bailing out.");
     process.exit(-2);
+  }
+
+  // folder
+  if (params.hasOwnProperty(valid_params[2])) {
+    newman_params.push("--folder");
+    newman_params.push(params[valid_params[2]]);
   }
 
   // env
@@ -118,8 +123,9 @@ function run() {
     var script_location = tmp_location + params["script"];
 
     run_params.push(script_location);
-    run_params.push(newman_params);
+    run_params.concat(newman_params);
 
+    console.error(run_params);
     const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
     
     newman.stdout.on('data', (data) => {
@@ -141,33 +147,7 @@ function run() {
 function continue_to_scripts() {
   // Run newman
   // const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
-  continue_to_folder();
-}
-
-function continue_to_folder() {
-  var run_params = ["run"];
-
-  if (params["folder"]) {
-    run_params.push("--folder");
-    run_params.push(tmp_location + params["folder"]);
-    run_params.push(newman_params);
-    
-    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
-    
-    newman.stdout.on('data', (data) => {
-      process.stderr.write(data);
-    });
-
-    newman.stderr.on('data', (data) => {
-      process.stderr.write(data);
-    });
-  
-    newman.on('exit', (data) => {
-      produce_response();
-    });
-  } else {
-      produce_response();
-  }
+  produce_response();
 }
 
 function produce_response() {

@@ -5,9 +5,9 @@
 At least one required:
 script - String: JSON file that contains the tests to run.
 scripts - String[]: Array of json scripts to run.
-folder - String: Folder of json scripts to run.
 
 Optional:
+folder - String: Specify a single folder to run from a collection.
 env - String: Postman environment as json file.
 data - String: Postman data file.
 globals - String: Postman globals file.
