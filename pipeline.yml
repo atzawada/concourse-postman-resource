@@ -32,8 +32,13 @@ jobs:
           #iterations: 10
           #bail: true
           #silent: true
-          # no_color: true
+          #no_color: true
           #insecure: true
           #suppress_exit_code: true
           #ignore_redirects: true
           fail_job_on_test_failure: false
+          dump_json_file_location: "git-repo/test/results"
+
+      - put: git-repo
+        params:
+          repository: "/tmp/build/put/git-repo"

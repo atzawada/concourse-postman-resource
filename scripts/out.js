@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const { spawn } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
 var request;
@@ -155,6 +155,12 @@ function produce_response() {
   if (params["fail_job_on_test_failure"] && failures.length > 0) {
     console.error("Run finished with errors");
     process.exit(-3);
+  }
+
+  if (params["dump_json_file_location"]) {
+    dump_location = tmp_location + params["dump_json_file_location"];
+    spawnSync("cp", ["/opt/resource/results.json", dump_location]);
+    console.error("File has been copied to " + dump_location);
   }
 
   // Create response
