@@ -2,6 +2,7 @@
 
 const { spawn } = require("child_process");
 const readline = require('readline');
+const fs = require('fs');
 var request;
 const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
                        "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects",
@@ -136,27 +137,34 @@ function continue_to_scripts() {
   for (script in scripts) {
     const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
   }*/
-
-  const ls = spawn("ls");
-  ls.stdout.on('data', (data) => {
-    console.error(data);
-  });
-
-  ls.stderr.on('data', (data) => {
-    console.error(data);
-  });
   
   produce_response();
 }
 
 function produce_response() {
+
+  // Get results
+  var results = fs.readFileSync("/opt/resource/results.json");
+
+  results = JSON.parse(results);
+  console.error(results);
+
+  var run = results["run"];
+  var failures = run["failures"];
+
+  if (params["fail_job_on_test_failure"] && failures.length > 0) {
+    console.error("Run finished with errors");
+    process.exit(-3);
+  }
+
   // Create response
+  var date = new Date();
+  var dateStr = date.toDateString() + " " + date.toTimeString();
+
   let response = {
-    "version": { "ref": "Success" },
+    "version": { "ref": dateStr },
     "metadata": [
-      { "name": "success", "value": "4" },
-      { "name": "failure", "value": "1" },
-      { "name": "error", "value": "2" }
+      { "name": "failures", "value": String(failures.length) }
     ]
   };
 
