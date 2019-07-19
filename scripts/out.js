@@ -4,7 +4,8 @@ const { spawn } = require("child_process");
 const readline = require('readline');
 var request;
 const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
-                       "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects" ];
+                       "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects",
+                       "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/put/";
 var params = [];
 var newman_params = [];
@@ -25,23 +26,6 @@ function run() {
 
   // Check and parse params
   params = request["params"];
-
-  /*
-  // print process.argv
-  process.argv.forEach(function (val, index, array) {
-    console.error(index + ': ' + val);
-  });
-
-  var path = params["script"];
-
-  path = [ path ];
-
-  const ls = spawn("ls", path);
-
-  ls.stdout.on('data', (data) => {
-      process.stderr.write(data);
-  });
-  */
 
   for (param in params) {
     if (!valid_params.includes(param)) {
@@ -117,7 +101,7 @@ function run() {
   }
 
   console.error(newman_params);
-  var run_params = ["run"];
+  var run_params = ["run", "--reporters", "cli,json", "--reporter-json-export", "/opt/resource/results.json"];
 
   if (params["script"]) {
     var script_location = tmp_location + params["script"];
@@ -152,6 +136,15 @@ function continue_to_scripts() {
   for (script in scripts) {
     const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
   }*/
+
+  const ls = spawn("ls");
+  ls.stdout.on('data', (data) => {
+    console.error(data);
+  });
+
+  ls.stderr.on('data', (data) => {
+    console.error(data);
+  });
   
   produce_response();
 }
