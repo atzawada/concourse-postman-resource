@@ -1,10 +1,17 @@
 # Source configuration
 
 # In
+This operation is a no-op.
+
+### Concourse Options
+fail_job_on_test_failure - boolean: Fails concourse job if Newman reports a failing test.
+dump_json_file_location - String: If set will copy the json results file into the specified directory.
+dump_html_file_location - String: If set will create and copy the results file into the specified directory.
+
+# Out
 ## Params
-### At least one required:
+### Required
 script - String: JSON file that contains the tests to run.
-scripts - String[]: Array of json scripts to run.
 
 ### Newman Options:
 folder - String: Specify a single folder to run from a collection.
@@ -19,12 +26,5 @@ insecure - Boolean: Disable strict SSL.
 suppress_exit_code - Boolean: Continue running tests even after a failure.
 ignore_redirects - Boolean: Disable automatic forwarding of 3XX responses.
 
-### Concourse Options
-fail_job_on_test_failure - boolean: Fails concourse job if Newman reports a failing test.
-dump_json_file_location - String: If set will copy the json results file into the specified directory.
-dump_html_file_location - String: If set will create and copy the results file into the specified directory.
-
-# Out
-This operation is a no-op.
 # Check
 This operation is a no-op.
