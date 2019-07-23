@@ -21,11 +21,11 @@ resources:
   - name: postman
     type: postman
 
-  - name: ftp
-    type: ftp
-    source:
-      regex: (?P<file>test(?P<version>[0-9\.]+).*\.txt)
-      uri: ftp://((ftp-username)):((ftp-password))@172.17.0.3:21
+  #- name: ftp
+  #  type: ftp
+  #  source:
+  #    regex: (?P<file>test(?P<version>[0-9\.]+).*\.txt)
+  #    uri: ftp://((ftp-username)):((ftp-password))@172.17.0.3:21
 
 jobs:
   - name: test-postman
@@ -34,7 +34,6 @@ jobs:
       - put: postman
         params:
           script: "git-repo/test/postman_collection_fails.json"
-          scripts: "test-scripts"
           folder: "git-repo/test"
           #env: "test-env"
           #data: "test-data"
@@ -49,6 +48,6 @@ jobs:
           fail_job_on_test_failure: false
           dump_json_file_location: "git-repo/test/results"
 
-      - put: ftp
-        params:
-          file: /tmp/build/put/git-repo/test/results
+      #- put: ftp
+      #  params:
+      #    file: /tmp/build/put/git-repo/test/results

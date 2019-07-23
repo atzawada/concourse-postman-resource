@@ -4,7 +4,7 @@ const { spawn, spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
 var request;
-const valid_params = [ "script", "scripts", "folder", "env", "data", "globals", "iterations",
+const valid_params = [ "script", "folder", "env", "data", "globals", "iterations",
                        "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects",
                        "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/put/";
@@ -35,69 +35,69 @@ function run() {
     }
   }
 
-  if (!params.hasOwnProperty(valid_params[0]) &&  // script
-      !params.hasOwnProperty(valid_params[1])) {  // scripts
+  // script
+  if (!params.hasOwnProperty(valid_params[0])) {
     console.error("Missing required parameter, bailing out.");
     process.exit(-2);
   }
 
   // folder
-  if (params.hasOwnProperty(valid_params[2])) {
+  if (params.hasOwnProperty(valid_params[1])) {
     newman_params.push("--folder");
-    newman_params.push(params[valid_params[2]]);
+    newman_params.push(params[valid_params[1]]);
   }
 
   // env
-  if (params.hasOwnProperty(valid_params[3])) {
+  if (params.hasOwnProperty(valid_params[2])) {
     newman_params.push("-e");
-    newman_params.push(params[valid_params[3]]);
+    newman_params.push(params[valid_params[2]]);
   }
 
   // data
-  if (params.hasOwnProperty(valid_params[4])) {
+  if (params.hasOwnProperty(valid_params[3])) {
     newman_params.push("-d");
-    newman_params.push(params[valid_params[4]]);
+    newman_params.push(params[valid_params[3]]);
   }
 
   // globals
-  if (params.hasOwnProperty(valid_params[5])) {
+  if (params.hasOwnProperty(valid_params[4])) {
     newman_params.push("-g");
-    newman_params.push(params[valid_params[5]]);
+    newman_params.push(params[valid_params[4]]);
   }
 
   // iterations
-  if (params.hasOwnProperty(valid_params[6])) {
+  if (params.hasOwnProperty(valid_params[5])) {
     newman_params.push("-n");
-    newman_params.push(params[valid_params[6]]);
+    newman_params.push(params[valid_params[5]]);
   }
 
   // bail
-  if (params.hasOwnProperty(valid_params[7]) && params[valid_params[7]]) {
+  if (params.hasOwnProperty(valid_params[6]) && params[valid_params[6]]) {
     newman_params.push("--bail");
   }
 
   // silent
-  if (params.hasOwnProperty(valid_params[8]) && params[valid_params[8]]) {
+  if (params.hasOwnProperty(valid_params[7]) && params[valid_params[7]]) {
     newman_params.push("--silent");
   }
 
   // no_color
-  if (params.hasOwnProperty(valid_params[9]) && params[valid_params[9]]) {
+  if (params.hasOwnProperty(valid_params[8]) && params[valid_params[8]]) {
     newman_params.push("--no-color");
   }
 
   // insecure
-  if (params.hasOwnProperty(valid_params[10]) && params[valid_params[10]]) {
+  if (params.hasOwnProperty(valid_params[9]) && params[valid_params[9]]) {
     newman_params.push("-k");
   }
 
   // suppress_exit_code
-  if (params.hasOwnProperty(valid_params[11]) && params[valid_params[11]]) {
+  if (params.hasOwnProperty(valid_params[10]) && params[valid_params[10]]) {
     newman_params.push("-x");
   }
 
   // ignore_redirects
-  if (params.hasOwnProperty(valid_params[12]) && params[valid_params[12]]) {
+  if (params.hasOwnProperty(valid_params[11]) && params[valid_params[11]]) {
     newman_params.push("--ignore-redirects");
   }
 
@@ -112,26 +112,7 @@ function run() {
 
     console.error(run_params);
     const newman = spawnSync("newman", run_params, {stdio: ["ignore", process.stderr, process.stderr ] });
-    //const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
-    
-    /*
-    newman.stdout.on('data', (data) => {
-      process.stderr.write(data);
-    });
-
-    newman.stderr.on('data', (data) => {
-      process.stderr.write(data);
-    });*/
-  
-    newman.on('exit', (data) => {
-      produce_response();
-    });
-  } else {
-    produce_response();
   }
-}
-
-function produce_response() {
 
   // Get results
   var results = fs.readFileSync("/opt/resource/results.json");
@@ -151,6 +132,10 @@ function produce_response() {
     dump_location = tmp_location + params["dump_json_file_location"];
     spawnSync("cp", ["/opt/resource/results.json", dump_location]);
     console.error("File has been copied to " + dump_location);
+  }
+
+  if (params["dump_html_file_location"]) {
+    
   }
 
   // Create response
