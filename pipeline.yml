@@ -33,7 +33,7 @@ jobs:
       - get: git-repo
       - put: postman
         params:
-          script: "git-repo/test/postman_collection_fails.json"
+          script: "git-repo/test/postman_collection.json"
           folder: "git-repo/test"
           #env: "test-env"
           #data: "test-data"
@@ -41,12 +41,12 @@ jobs:
           #iterations: 10
           #bail: true
           #silent: true
-          #no_color: true
           #insecure: true
           #suppress_exit_code: true
           #ignore_redirects: true
           fail_job_on_test_failure: false
           dump_json_file_location: "git-repo/test/results"
+          dump_html_file_location: "git-repo/test/results"
 
       #- put: ftp
       #  params:

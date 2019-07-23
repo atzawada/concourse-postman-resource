@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 let response = [
-    { "status": "success" }
+    { "status": "Complete" }
 ];
 
 console.log(JSON.stringify(response));
