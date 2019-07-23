@@ -3,6 +3,10 @@ resource_types:
     type: docker-image
     source:
       repository: atzawada/concourse-postman-resource
+  - name: ftp
+    type: docker-image
+    source:
+      repository: aequitas/ftp-resource
 
 resources:
   - name: git-repo
@@ -16,6 +20,12 @@ resources:
   
   - name: postman
     type: postman
+
+  - name: ftp
+    type: ftp
+    source:
+      regex: (?P<file>test(?P<version>[0-9\.]+).*\.txt)
+      uri: ftp://((ftp-username)):((ftp-password))@172.17.0.3:21
 
 jobs:
   - name: test-postman
@@ -39,6 +49,6 @@ jobs:
           fail_job_on_test_failure: false
           dump_json_file_location: "git-repo/test/results"
 
-      - put: git-repo
+      - put: ftp
         params:
-          repository: "/tmp/build/put/git-repo"
+          file: /tmp/build/put/git-repo/test/results

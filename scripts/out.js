@@ -111,34 +111,24 @@ function run() {
     run_params.concat(newman_params);
 
     console.error(run_params);
-    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
+    const newman = spawnSync("newman", run_params, {stdio: ["ignore", process.stderr, process.stderr ] });
+    //const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
     
+    /*
     newman.stdout.on('data', (data) => {
       process.stderr.write(data);
     });
 
     newman.stderr.on('data', (data) => {
       process.stderr.write(data);
-    });
+    });*/
   
     newman.on('exit', (data) => {
-      continue_to_scripts();
+      produce_response();
     });
   } else {
-    continue_to_scripts();
+    produce_response();
   }
-}
-
-function continue_to_scripts() {
-  // Run newman
-  
-  /*
-  var scripts = params["scripts"];
-  for (script in scripts) {
-    const newman = spawn("newman", run_params, { cwd: "/opt/resource" });
-  }*/
-  
-  produce_response();
 }
 
 function produce_response() {
