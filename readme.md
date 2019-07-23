@@ -21,7 +21,6 @@ globals - String: Postman globals file.
 iterations - Integer: Number of iterations to run.
 bail - Boolean: Stops the runner when a test case fails.
 silent - Boolean: Disable terminal output.
-no_color - Boolean: Disable colored output.
 insecure - Boolean: Disable strict SSL.
 suppress_exit_code - Boolean: Continue running tests even after a failure.
 ignore_redirects - Boolean: Disable automatic forwarding of 3XX responses.

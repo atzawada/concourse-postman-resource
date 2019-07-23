@@ -5,7 +5,7 @@ const readline = require('readline');
 const fs = require('fs');
 var request;
 const valid_params = [ "script", "folder", "env", "data", "globals", "iterations",
-                       "bail", "silent", "no_color", "insecure", "suppress_exit_code", "ignore_redirects",
+                       "bail", "silent", "insecure", "suppress_exit_code", "ignore_redirects",
                        "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/put/";
 var params = [];
@@ -81,23 +81,18 @@ function run() {
     newman_params.push("--silent");
   }
 
-  // no_color
-  if (params.hasOwnProperty(valid_params[8]) && params[valid_params[8]]) {
-    newman_params.push("--no-color");
-  }
-
   // insecure
-  if (params.hasOwnProperty(valid_params[9]) && params[valid_params[9]]) {
+  if (params.hasOwnProperty(valid_params[8]) && params[valid_params[8]]) {
     newman_params.push("-k");
   }
 
   // suppress_exit_code
-  if (params.hasOwnProperty(valid_params[10]) && params[valid_params[10]]) {
+  if (params.hasOwnProperty(valid_params[9]) && params[valid_params[9]]) {
     newman_params.push("-x");
   }
 
   // ignore_redirects
-  if (params.hasOwnProperty(valid_params[11]) && params[valid_params[11]]) {
+  if (params.hasOwnProperty(valid_params[10]) && params[valid_params[10]]) {
     newman_params.push("--ignore-redirects");
   }
 
@@ -135,7 +130,7 @@ function run() {
   }
 
   if (params["dump_html_file_location"]) {
-    
+
   }
 
   // Create response
