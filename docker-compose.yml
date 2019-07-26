@@ -1,10 +1,19 @@
-pureftpd:
-  image: vimagick/pure-ftpd
-  ports:
-    - "21:21"
-  volumes:
-    - ./data/ftpuser:/home/ftpuser
-    - ./data/pure-ftpd:/etc/pure-ftpd
-  privileged: true
-  restart: always
-  
+version: '3'
+
+services:
+  ftpd-server:
+    container_name: ftpd-server
+    image: stilliard/pure-ftpd:hardened
+    ports:
+      - 21:21
+      - 20:20
+      - 30000-30009:30000-30009
+    volumes:
+      - './ftp/data:/home/username/'
+      - './ftp/pass:/etc/pure-ftpd/passwd'
+    network_mode: host
+    environment:
+      FTP_USER_NAME: "admin"
+      FTP_USER_PASS: "admin"
+      FTP_USER_HOME: "/home/admin"
+    restart: always

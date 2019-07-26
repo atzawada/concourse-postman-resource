@@ -99,6 +99,10 @@ function run() {
   console.error(newman_params);
   var run_params = ["run", "--reporters", "cli,json", "--reporter-json-export", "/opt/resource/results.json"];
 
+  if (params["dump_html_file_location"]) {
+    run_params[2] = "cli,json,html";
+  }
+
   if (params["script"]) {
     var script_location = tmp_location + params["script"];
 
@@ -126,11 +130,13 @@ function run() {
   if (params["dump_json_file_location"]) {
     dump_location = tmp_location + params["dump_json_file_location"];
     spawnSync("cp", ["/opt/resource/results.json", dump_location]);
-    console.error("File has been copied to " + dump_location);
+    console.error("JSON file has been copied to " + dump_location);
   }
 
   if (params["dump_html_file_location"]) {
-
+    dump_location = tmp_location + params["dump_html_file_location"];
+    spawnSync("cp", ["/opt/resource/results.html", dump_location]);
+    console.error("HTML file has been copied to " + dump_location);
   }
 
   // Create response

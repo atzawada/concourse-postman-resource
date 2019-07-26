@@ -1,5 +1,7 @@
 FROM node:8-slim
+
 RUN npm install -g newman
+RUN npm install -g newman-reporter-html
 
 COPY scripts/in.js      /opt/resource/in
 COPY scripts/out.js     /opt/resource/out

@@ -3,10 +3,16 @@ resource_types:
     type: docker-image
     source:
       repository: atzawada/concourse-postman-resource
+  
   - name: ftp
     type: docker-image
     source:
       repository: aequitas/ftp-resource
+
+  - name: email
+    type: docker-image
+    source:
+      repository: pcfseceng/email-resource
 
 resources:
   - name: git-repo
@@ -21,11 +27,22 @@ resources:
   - name: postman
     type: postman
 
-  #- name: ftp
-  #  type: ftp
-  #  source:
-  #    regex: (?P<file>test(?P<version>[0-9\.]+).*\.txt)
-  #    uri: ftp://((ftp-username)):((ftp-password))@172.17.0.3:21
+  #- name: email
+   # type: email
+    #source:
+     # smtp:
+      #  host: ((email-host))
+       # port: ((email-port))
+        #username: ((email-username))
+    #    password: TabM8teAppl!c8tion((email-password))
+     # from: ((email-address))
+      #to: [ ((email-recipient)) ]
+
+  - name: ftp
+    type: ftp
+    source:
+      regex: (?P<file>test(?P<version>[0-9\.]+).*\.txt)
+      uri: ((ftp-username)):((ftp-password))@localhost:21
 
 jobs:
   - name: test-postman
@@ -47,7 +64,22 @@ jobs:
           fail_job_on_test_failure: false
           dump_json_file_location: "git-repo/test/results"
           dump_html_file_location: "git-repo/test/results"
-
-      #- put: ftp
+  
+      #- put: email
       #  params:
-      #    file: /tmp/build/put/git-repo/test/results
+      #    subject_text: "Testing finished"
+      #    body_text: "See attached file."
+      #    attachment_globs: [ "git-repo/test/results.html" ]
+      - task: test-ftp
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source: {repository: ubuntu}
+          run:
+            path: which
+            args: ["ftp"]
+
+      - put: ftp
+        params:
+          file: /tmp/build/put/git-repo/test/results
