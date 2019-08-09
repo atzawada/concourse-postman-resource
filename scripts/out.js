@@ -8,7 +8,7 @@ const valid_params = [ "script", "folder", "env", "data", "globals", "iterations
                        "bail", "silent", "insecure", "suppress_exit_code", "ignore_redirects",
                        "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/put/";
-const dump_location = "/opt/resource/out";
+// const dump_location = "/opt/resource/out";
 
 var params = [];
 var newman_params = [];
