@@ -1,4 +1,4 @@
 credentials.yml
-/data/*
+/data
 /ftp/*
 docker-compose.yml
