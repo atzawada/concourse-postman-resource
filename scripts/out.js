@@ -134,11 +134,13 @@ function run() {
   }
 
   if (params["dump_json_file_location"]) {
+    dump_location = temp_location + params["dump_json_file_location"];
     spawnSync("cp", ["/opt/resource/results.json", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("JSON file has been copied to " + dump_location);
   }
 
   if (params["dump_html_file_location"]) {
+    dump_location = temp_location + params["dump_html_file_location"];
     spawnSync("cp", ["/opt/resource/results.html", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("HTML file has been copied to " + dump_location);
   }
