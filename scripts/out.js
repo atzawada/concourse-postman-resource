@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const { spawn, spawnSync } = require("child_process");
+const { spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
 var request;
@@ -8,8 +8,12 @@ const valid_params = [ "script", "folder", "env", "data", "globals", "iterations
                        "bail", "silent", "insecure", "suppress_exit_code", "ignore_redirects",
                        "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/put/";
+const dump_location = "/opt/resource/out";
+
 var params = [];
 var newman_params = [];
+
+console.error(process.argv);
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -101,6 +105,8 @@ function run() {
 
   if (params["dump_html_file_location"]) {
     run_params[2] = "cli,json,html";
+    run_params.push("--reporter-html-export");
+    run_params.push("/opt/resource/results.html");
   }
 
   if (params["script"]) {
@@ -128,14 +134,12 @@ function run() {
   }
 
   if (params["dump_json_file_location"]) {
-    dump_location = tmp_location + params["dump_json_file_location"];
-    spawnSync("cp", ["/opt/resource/results.json", dump_location]);
+    spawnSync("cp", ["/opt/resource/results.json", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("JSON file has been copied to " + dump_location);
   }
 
   if (params["dump_html_file_location"]) {
-    dump_location = tmp_location + params["dump_html_file_location"];
-    spawnSync("cp", ["/opt/resource/results.html", dump_location]);
+    spawnSync("cp", ["/opt/resource/results.html", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("HTML file has been copied to " + dump_location);
   }
 
