@@ -1,9 +1,9 @@
 resources:
   - name: git-repo
     type: git
-    check_every: 10s
     source:
-      uri: ((git-repo))
+      uri: ((postman-resource-git-uri))
+      webhook_token: token
       branch: master
 
   - name: docker-image
