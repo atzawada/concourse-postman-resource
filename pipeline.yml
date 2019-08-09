@@ -22,16 +22,16 @@ resources:
   - name: postman
     type: postman
 
-  #- name: email
-   # type: email
-    #source:
-     # smtp:
-      #  host: ((email-host))
-       # port: ((email-port))
-        #username: ((email-username))
-    #    password: TabM8teAppl!c8tion((email-password))
-     # from: ((email-address))
-      #to: [ ((email-recipient)) ]
+  - name: email
+    type: email
+    source:
+      smtp:
+        host: ((email-host))
+        port: ((email-port))
+        username: ((email-username))
+        password: TabM8teAppl!c8tion((email-password))
+      from: ((email-address))
+      to: [ ((email-recipient)) ]
 
 jobs:
   - name: test-postman
@@ -54,8 +54,8 @@ jobs:
           dump_json_file_location: "git-repo/test/results"
           dump_html_file_location: "git-repo/test/results"
   
-      #- put: email
-      #  params:
-      #    subject_text: "Testing finished"
-      #    body_text: "See attached file."
-      #    attachment_globs: [ "git-repo/test/results.html" ]
+      - put: email
+        params:
+          subject_text: "Testing finished"
+          body_text: "See attached file."
+          attachment_globs: [ "postman/results.json" ]
