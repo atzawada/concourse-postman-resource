@@ -10,7 +10,7 @@ const valid_params = [ "script", "folder", "env", "data", "globals", "iterations
 const tmp_location = "/tmp/build/get/";
 // const dump_location = "/opt/resource/out";
 
-spawnSync("mkdir", [process.argv[1]], {stdio: ["ignore", process.stderr, process.stderr ] });
+spawnSync("mkdir", ["-p", process.argv[2]], {stdio: ["ignore", process.stderr, process.stderr ] });
 /*
 
 var params = [];
@@ -168,6 +168,7 @@ function run() {
   console.log(JSON.stringify(response));
 }
 */
+
 let response = [
     { "status": "Complete" }
 ];
