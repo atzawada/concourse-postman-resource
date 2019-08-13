@@ -15,7 +15,7 @@ var newman_params = [];
 
 console.error(process.argv);
 
-spawnSync("ls", ["/opt/resource"], {stdio: ["ignore", process.stderr, process.stderr ] });
+spawnSync("ls", ["/tmp/build/put/git-repo/test"], {stdio: ["ignore", process.stderr, process.stderr ] });
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -147,7 +147,7 @@ function run() {
     console.error("HTML file has been copied to " + dump_location);
   }
 
-  spawnSync("ls", ["/opt/resource"], {stdio: ["ignore", process.stderr, process.stderr ] });
+  spawnSync("ls", ["/tmp/build/put/git-repo/test"], {stdio: ["ignore", process.stderr, process.stderr ] });
 
   // Create response
   var date = new Date();
