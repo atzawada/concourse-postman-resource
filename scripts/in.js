@@ -1,5 +1,8 @@
 #! /usr/bin/env node
 
+spawnSync("mkdir", [process.argv[1]], {stdio: ["ignore", process.stderr, process.stderr ] });
+
+/*
 const { spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
@@ -164,3 +167,9 @@ function run() {
 
   console.log(JSON.stringify(response));
 }
+*/
+let response = [
+    { "status": "Complete" }
+];
+
+console.log(JSON.stringify(response));
