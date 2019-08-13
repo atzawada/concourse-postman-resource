@@ -15,6 +15,7 @@ var newman_params = [];
 
 console.error(process.argv);
 
+spawnSync("mkdir", [process.argv[1]]);
 spawnSync("ls", ["-alrt", "/opt/resource/out"], {stdio: ["ignore", process.stderr, process.stderr ] });
 
 // Read JSON input from stdin
