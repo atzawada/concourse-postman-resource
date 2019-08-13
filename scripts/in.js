@@ -1,8 +1,5 @@
 #! /usr/bin/env node
 
-spawnSync("mkdir", [process.argv[1]], {stdio: ["ignore", process.stderr, process.stderr ] });
-
-/*
 const { spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
@@ -12,6 +9,9 @@ const valid_params = [ "script", "folder", "env", "data", "globals", "iterations
                        "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
 const tmp_location = "/tmp/build/get/";
 // const dump_location = "/opt/resource/out";
+
+spawnSync("mkdir", [process.argv[1]], {stdio: ["ignore", process.stderr, process.stderr ] });
+/*
 
 var params = [];
 var newman_params = [];
