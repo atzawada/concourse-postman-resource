@@ -6,16 +6,11 @@ const fs = require('fs');
 var request;
 const valid_params = [ "script", "folder", "env", "data", "globals", "iterations",
                        "bail", "silent", "insecure", "suppress_exit_code", "ignore_redirects",
-                       "fail_job_on_test_failure", "dump_json_file_location", "dump_html_file_location" ];
+                       "fail_job_on_test_failure"];
 const tmp_location = "/tmp/build/put/";
-// const dump_location = "/opt/resource/out";
 
 var params = [];
 var newman_params = [];
-
-console.error(process.argv);
-
-spawnSync("ls", ["-alrt", process.argv[2]], {stdio: ["ignore", process.stderr, process.stderr ] });
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -25,7 +20,6 @@ const rl = readline.createInterface({
 
 rl.on('line', (input) => {
   request = JSON.parse(input);
-  console.error(input);
   run();
 });
 
@@ -105,12 +99,6 @@ function run() {
   console.error(newman_params);
   var run_params = ["run", "--reporters", "cli,json", "--reporter-json-export", "/opt/resource/results.json"];
 
-  if (params["dump_html_file_location"]) {
-    run_params[2] = "cli,json,html";
-    run_params.push("--reporter-html-export");
-    run_params.push("/opt/resource/results.html");
-  }
-
   if (params["script"]) {
     var script_location = tmp_location + params["script"];
 
@@ -125,7 +113,6 @@ function run() {
   var results = fs.readFileSync("/opt/resource/results.json");
 
   results = JSON.parse(results);
-  // console.error(results);
 
   var run = results["run"];
   var failures = run["failures"];
@@ -134,20 +121,6 @@ function run() {
     console.error("Run finished with errors");
     process.exit(-3);
   }
-
-  if (params["dump_json_file_location"]) {
-    dump_location = process.argv[0]; //tmp_location + params["dump_json_file_location"];
-    spawnSync("cp", ["/opt/resource/results.json", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
-    console.error("JSON file has been copied to " + dump_location);
-  }
-
-  if (params["dump_html_file_location"]) {
-    dump_location = process.argv[0]; //tmp_location + params["dump_html_file_location"];
-    spawnSync("cp", ["/opt/resource/results.html", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
-    console.error("HTML file has been copied to " + dump_location);
-  }
-
-  spawnSync("ls", ["-alrt", process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
 
   // Create response
   var date = new Date();
