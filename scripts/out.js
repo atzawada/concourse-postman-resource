@@ -15,8 +15,8 @@ var newman_params = [];
 
 console.error(process.argv);
 
-spawnSync("mkdir", [process.argv[1]], {stdio: ["ignore", process.stderr, process.stderr ] });
-spawnSync("ls", ["-alrt", "/opt/resource/out"], {stdio: ["ignore", process.stderr, process.stderr ] });
+// spawnSync("mkdir", [process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
+spawnSync("ls", ["-alrt", process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
 
 // Read JSON input from stdin
 const rl = readline.createInterface({
@@ -137,18 +137,18 @@ function run() {
   }
 
   if (params["dump_json_file_location"]) {
-    dump_location = "/opt/resource/out"; //tmp_location + params["dump_json_file_location"];
+    dump_location = process.argv[0]; //tmp_location + params["dump_json_file_location"];
     spawnSync("cp", ["/opt/resource/results.json", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("JSON file has been copied to " + dump_location);
   }
 
   if (params["dump_html_file_location"]) {
-    dump_location = "/opt/resource/out"; //tmp_location + params["dump_html_file_location"];
+    dump_location = process.argv[0]; //tmp_location + params["dump_html_file_location"];
     spawnSync("cp", ["/opt/resource/results.html", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("HTML file has been copied to " + dump_location);
   }
 
-  spawnSync("ls", ["-alrt", "/opt/resource/out/opt"], {stdio: ["ignore", process.stderr, process.stderr ] });
+  spawnSync("ls", ["-alrt", process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
 
   // Create response
   var date = new Date();
