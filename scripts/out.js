@@ -15,6 +15,8 @@ var newman_params = [];
 
 console.error(process.argv);
 
+spawnSync("ls", ["/opt/resource"], {stdio: ["ignore", process.stderr, process.stderr ] });
+
 // Read JSON input from stdin
 const rl = readline.createInterface({
   input: process.stdin,
