@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-
+/*
 const { spawnSync } = require("child_process");
 const readline = require('readline');
 const fs = require('fs');
@@ -11,7 +11,6 @@ const tmp_location = "/tmp/build/get/";
 // const dump_location = "/opt/resource/out";
 
 spawnSync("mkdir", ["-p", process.argv[2]], {stdio: ["ignore", process.stderr, process.stderr ] });
-/*
 
 var params = [];
 var newman_params = [];
@@ -168,7 +167,6 @@ function run() {
   console.log(JSON.stringify(response));
 }
 */
-
 let response = [
     { "status": "Complete" }
 ];
