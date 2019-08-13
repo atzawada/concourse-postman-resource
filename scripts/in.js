@@ -18,7 +18,7 @@ console.error(process.argv);
 // spawnSync("mkdir", [process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
 spawnSync("ls", ["-alrt", process.argv[0]], {stdio: ["ignore", process.stderr, process.stderr ] });
 
-/*
+
 // Read JSON input from stdin
 const rl = readline.createInterface({
   input: process.stdin,
@@ -164,11 +164,3 @@ function run() {
 
   console.log(JSON.stringify(response));
 }
-*/
-
-let response = {
-  "version": { "ref": "Complete" },
-  "metadata": []
-}; 
-
-console.log(JSON.stringify(response));
