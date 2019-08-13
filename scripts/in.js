@@ -167,8 +167,10 @@ function run() {
   console.log(JSON.stringify(response));
 }
 */
-let response = [
-    { "status": "Complete" }
-];
+let response = {
+  "version": { "ref": "Complete" },
+  "metadata": []
+}; 
 
 console.log(JSON.stringify(response));
+
