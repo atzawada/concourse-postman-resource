@@ -123,7 +123,7 @@ function run() {
   var results = fs.readFileSync("/opt/resource/results.json");
 
   results = JSON.parse(results);
-  console.error(results);
+  // console.error(results);
 
   var run = results["run"];
   var failures = run["failures"];
@@ -144,6 +144,8 @@ function run() {
     spawnSync("cp", ["/opt/resource/results.html", dump_location], {stdio: ["ignore", process.stderr, process.stderr ] });
     console.error("HTML file has been copied to " + dump_location);
   }
+
+  spawnSync("ls", ["/opt/resource"], {stdio: ["ignore", process.stderr, process.stderr ] });
 
   // Create response
   var date = new Date();
